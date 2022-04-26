@@ -1,10 +1,10 @@
 class Estudiante {
-  String matricula;
-  String nombreCompleto;
-  String carrera;
-  String semestre;
-  String telefono;
-  String correo;
+  final String matricula;
+  final String nombreCompleto;
+  final String carrera;
+  final String semestre;
+  final String telefono;
+  final String correo;
 
   Estudiante(this.matricula, this.nombreCompleto, this.carrera, this.semestre,
       this.telefono, this.correo);

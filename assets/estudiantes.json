@@ -1,0 +1,36 @@
+ {
+     "Estudiante": [{
+             "matricula": "18760303",
+             "nombreCompleto": "Maria Ruiz Valencia",
+             "carrera": "Gestion Empresarial",
+             "semestre": "6",
+             "telefono": "6161232333",
+             "correo": "maria@gmail.com"
+         },
+         {
+             "matricula": "18764678",
+             "nombreCompleto": "Esteban Martinez Prado",
+             "carrera": "Mecatronica",
+             "semestre": "6",
+             "telefono": "6161543432",
+             "correo": "martinez@gmail.com"
+         },
+         {
+             "matricula": "18764444",
+             "nombreCompleto": "Alberto Lopez Enriquez",
+             "carrera": "Mecatronica",
+             "semestre": "5",
+             "telefono": "6165122231",
+             "correo": "maria@gmail.com"
+         },
+         {
+             "matricula": "18764455",
+             "nombreCompleto": "Rogelio Chavez Estrada",
+             "carrera": "Sistemas Computacionales",
+             "semestre": "9",
+             "telefono": "6165122251",
+             "correo": "rogelio@gmail.com"
+         }
+
+     ]
+ }
