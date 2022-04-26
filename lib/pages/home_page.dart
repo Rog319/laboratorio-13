@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:laboratorio_13/pages/info_estudiante.dart';
 
-import '../estudiante.dart';
-
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -17,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   // ignore: prefer_final_fields
   List estudiantes = [];
 
+  @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) => leerJson(context));
@@ -48,6 +47,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Widget ListaEstudiantes(context, index) {
     return ListTile(
       title: Text(estudiantes[index]["nombreCompleto"],
