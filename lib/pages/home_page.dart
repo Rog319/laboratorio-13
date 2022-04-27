@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:laboratorio_13/estudiante.dart';
 import 'package:laboratorio_13/pages/info_estudiante.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,21 +14,35 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   // ignore: prefer_final_fields
-  List estudiantes = [];
+  List datosEstudiantes = [];
+  List<Estudiante> listaEstudiantes = [];
 
+  //Metodo para que leerJson se inicie al inciar la app
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) => leerJson(context));
   }
 
+  //Leer y cargar pdf y colocar sus valores en una lista especifica
   Future<void> leerJson(BuildContext context) async {
     final String datosLeidos =
         await rootBundle.loadString('assets/estudiantes.json');
     final datosDecodificados = await json.decode(datosLeidos);
     setState(() {
-      estudiantes = datosDecodificados["Estudiante"];
+      datosEstudiantes = datosDecodificados["Estudiante"];
     });
+
+    //Guardar valores del pdf en nuestra lista de tipo "Estudiante"
+    for (var i = 0; i < datosEstudiantes.length; i++) {
+      listaEstudiantes.add(Estudiante(
+          matricula: datosEstudiantes[i]["matricula"],
+          nombreCompleto: datosEstudiantes[i]["nombreCompleto"],
+          carrera: datosEstudiantes[i]["carrera"],
+          semestre: datosEstudiantes[i]["semestre"],
+          telefono: datosEstudiantes[i]["telefono"],
+          correo: datosEstudiantes[i]["correo"]));
+    }
   }
 
   @override
@@ -41,7 +56,7 @@ class _HomePageState extends State<HomePage> {
         color: const Color(0xffB38BE8),
         child: ListView.builder(
           itemBuilder: ListaEstudiantes,
-          itemCount: estudiantes.length,
+          itemCount: datosEstudiantes.length,
         ),
       ),
     );
@@ -50,20 +65,21 @@ class _HomePageState extends State<HomePage> {
   // ignore: non_constant_identifier_names
   Widget ListaEstudiantes(context, index) {
     return ListTile(
-      title: Text(estudiantes[index]["nombreCompleto"],
+      title: Text(listaEstudiantes[index].nombreCompleto,
           style: const TextStyle(fontSize: 20)),
-      subtitle: Text("Matricula: " + estudiantes[index]["matricula"]),
+      subtitle: Text("Matricula: " + listaEstudiantes[index].matricula),
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => InformacionEstudiante(
-                estudiantes[index]["matricula"],
-                estudiantes[index]["nombreCompleto"],
-                estudiantes[index]["carrera"],
-                estudiantes[index]["semestre"],
-                estudiantes[index]["telefono"],
-                estudiantes[index]["correo"]),
+                //Mandamos los valores necesarios para info_estudiante
+                listaEstudiantes[index].matricula,
+                listaEstudiantes[index].nombreCompleto,
+                listaEstudiantes[index].carrera,
+                listaEstudiantes[index].semestre,
+                listaEstudiantes[index].telefono,
+                listaEstudiantes[index].correo),
           ),
         );
       },

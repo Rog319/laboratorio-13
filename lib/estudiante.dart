@@ -6,6 +6,11 @@ class Estudiante {
   final String telefono;
   final String correo;
 
-  Estudiante(this.matricula, this.nombreCompleto, this.carrera, this.semestre,
-      this.telefono, this.correo);
+  const Estudiante(
+      {required this.matricula,
+      required this.nombreCompleto,
+      required this.carrera,
+      required this.semestre,
+      required this.telefono,
+      required this.correo});
 }
