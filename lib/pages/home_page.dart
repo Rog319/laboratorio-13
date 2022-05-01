@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:laboratorio_13/estudiante.dart';
 import 'package:laboratorio_13/pages/info_estudiante.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,8 +14,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   // ignore: prefer_final_fields
-  List datosEstudiantes = [];
   List<Estudiante> listaEstudiantes = [];
+  var mapaEstudiantes = {};
 
   //Metodo para que leerJson se inicie al inciar la app
   @override
@@ -26,22 +26,23 @@ class _HomePageState extends State<HomePage> {
 
   //Leer y cargar pdf y colocar sus valores en una lista especifica
   Future<void> leerJson(BuildContext context) async {
-    final String datosLeidos =
-        await rootBundle.loadString('assets/estudiantes.json');
-    final datosDecodificados = await json.decode(datosLeidos);
+    final datosLeidos = await http.get(Uri.parse(
+        'https://rest-api-3d295-default-rtdb.firebaseio.com/Estudiantes.json'));
+    final datosDecodificados = await json.decode(datosLeidos.body);
     setState(() {
-      datosEstudiantes = datosDecodificados["Estudiante"];
+      mapaEstudiantes = datosDecodificados;
     });
 
-    //Guardar valores del pdf en nuestra lista de tipo "Estudiante"
-    for (var i = 0; i < datosEstudiantes.length; i++) {
+    //Guardar valores del Json en nuestra lista de tipo "Estudiante"
+    for (var i = 1; i <= mapaEstudiantes.length; i++) {
       listaEstudiantes.add(Estudiante(
-          matricula: datosEstudiantes[i]["matricula"],
-          nombreCompleto: datosEstudiantes[i]["nombreCompleto"],
-          carrera: datosEstudiantes[i]["carrera"],
-          semestre: datosEstudiantes[i]["semestre"],
-          telefono: datosEstudiantes[i]["telefono"],
-          correo: datosEstudiantes[i]["correo"]));
+        carrera: mapaEstudiantes["Estudiante_$i"]["carrera"],
+        correo: mapaEstudiantes["Estudiante_$i"]["correo"],
+        matricula: mapaEstudiantes["Estudiante_$i"]["matricula"],
+        nombreCompleto: mapaEstudiantes["Estudiante_$i"]["nombreCompleto"],
+        semestre: mapaEstudiantes["Estudiante_$i"]["semestre"],
+        telefono: mapaEstudiantes["Estudiante_$i"]["telefono"],
+      ));
     }
   }
 
@@ -56,7 +57,7 @@ class _HomePageState extends State<HomePage> {
         color: const Color(0xffB38BE8),
         child: ListView.builder(
           itemBuilder: ListaEstudiantes,
-          itemCount: datosEstudiantes.length,
+          itemCount: listaEstudiantes.length,
         ),
       ),
     );
