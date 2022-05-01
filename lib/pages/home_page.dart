@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // ignore: prefer_final_fields
   List<Estudiante> listaEstudiantes = [];
-  var mapaEstudiantes = {};
+  Map mapaEstudiantes = {};
 
   //Metodo para que leerJson se inicie al inciar la app
   @override
